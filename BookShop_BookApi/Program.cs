@@ -1,4 +1,7 @@
 
+using BookShop_BookApi.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace BookShop_BookApi
 {
     public class Program
@@ -9,7 +12,11 @@ namespace BookShop_BookApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddDbContext<ApplicationDbContext>(option =>
+            {
+                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+            builder.Services.AddControllers().AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
