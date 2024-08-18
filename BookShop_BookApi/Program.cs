@@ -1,6 +1,7 @@
 
 using BookShop_BookApi.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace BookShop_BookApi
 {
@@ -11,6 +12,10 @@ namespace BookShop_BookApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+                .WriteTo.File("log/BookShopLogs.txt", rollingInterval:RollingInterval.Day).CreateLogger();
+
+            builder.Host.UseSerilog();
 
             builder.Services.AddDbContext<ApplicationDbContext>(option =>
             {

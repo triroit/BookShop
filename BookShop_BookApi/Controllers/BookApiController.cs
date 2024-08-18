@@ -13,9 +13,11 @@ namespace BookShop_BookApi.Controllers
     public class BookApiController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
+        private readonly ILogger<BookApiController> _logger;
 
-        public BookApiController(ApplicationDbContext db) { 
+        public BookApiController(ApplicationDbContext db, ILogger<BookApiController> logger) { 
             _db = db;
+            _logger = logger;
         }
 
         [HttpGet]
